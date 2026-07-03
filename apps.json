@@ -21,8 +21,8 @@
       "description": "Multi-model AI council — compare, debate, and verify LLM responses. Runs councils locally with no key.",
       "repo": "https://github.com/TheAIHorizon/Consilium",
       "dir": "~/sanctum/Consilium",
-      "port": 5173,
-      "url": "http://127.0.0.1:5173",
+      "port": 5174,
+      "url": "http://127.0.0.1:5174",
       "start": "npm run dev"
     },
     {
@@ -87,9 +87,9 @@
       "description": "Local-first Analysis of Competing Hypotheses. Structured intelligence analysis powered by local models.",
       "repo": "https://github.com/TheAIHorizon/ACH",
       "dir": "~/sanctum/ACH",
-      "port": 5055,
-      "url": "http://127.0.0.1:5055",
-      "start": "npm run dev"
+      "port": 5173,
+      "url": "http://127.0.0.1:5173",
+      "start": "docker compose up -d && (cd frontend && npm install && npm run dev)"
     },
     {
       "id": "translachat",
