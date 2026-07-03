@@ -1,5 +1,5 @@
 {
-  "_comment": "Sanctum Hub app registry. Edit `dir` to point at where each repo is cloned on this machine. `port`/`start` are best-effort defaults — confirm against each app's README. The hub reads this file live; no rebuild needed.",
+  "_comment": "Sanctum Hub app registry. Edit `dir` to point at where each repo is cloned on this machine. `port`/`start` are best-effort defaults \u2014 confirm against each app's README. The hub reads this file live; no rebuild needed.",
   "base_dir": "~/sanctum",
   "apps": [
     {
@@ -18,7 +18,7 @@
       "id": "consilium",
       "name": "Consilium",
       "category": "Sanctum Suite",
-      "description": "Multi-model AI council — compare, debate, and verify LLM responses. Runs councils locally with no key.",
+      "description": "Multi-model AI council \u2014 compare, debate, and verify LLM responses. Runs councils locally with no key.",
       "repo": "https://github.com/TheAIHorizon/Consilium",
       "dir": "~/sanctum/Consilium",
       "port": 5174,
@@ -51,7 +51,7 @@
       "id": "sanctum-writer-pro",
       "name": "Sanctum Writer Pro",
       "category": "Sanctum Suite",
-      "description": "Writer with optional commercial cloud providers (BYOK). The privacy boundary is structural — cloud module only in Pro.",
+      "description": "Writer with optional commercial cloud providers (BYOK). The privacy boundary is structural \u2014 cloud module only in Pro.",
       "repo": "https://github.com/TheAIHorizon/SanctumWriterPro",
       "dir": "~/sanctum/SanctumWriterPro",
       "port": 3010,
@@ -133,6 +133,17 @@
       "dir": "~/sanctum/OCRT",
       "port": 8092,
       "url": "http://127.0.0.1:8092",
+      "start": "npm run dev"
+    },
+    {
+      "id": "cyberskill-tree",
+      "name": "CyberSkill Tree",
+      "category": "Educator Tools",
+      "description": "Cyberpunk-themed skill-mastery tracker for penetration-testing courses.",
+      "repo": "https://github.com/TheAIHorizon/cyberskill-tree",
+      "dir": "~/sanctum/cyberskill-tree",
+      "port": 8093,
+      "url": "http://127.0.0.1:8093",
       "start": "npm run dev"
     }
   ]
