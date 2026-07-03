@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sanctum Hub</title>
+<style>
+  :root{
+    --bg:#0e1116; --bg2:#141922; --panel:#171d27; --panel-hi:#1d2530;
+    --line:#242c38; --line-hi:#313b49;
+    --ink:#e7ecf3; --muted:#93a0b2;
+    --dim:#6b7789;
+    --teal:#3fd6c4; --teal-dim:#1c6f68;
+    --amber:#f0a94a;
+    --run:#4ade80; --run-bg:#12271b; --run-line:#1f5236;
+    --idle:#5b6675; --idle-bg:#191f28;
+    --accent:#7c8cff;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:
+    radial-gradient(900px 500px at 15% -8%, #17202e 0%, transparent 60%),
+    var(--bg);
+    color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--teal);text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:34px 22px 80px}
+
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;
+    padding-bottom:20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:13px}
+  .mark{width:38px;height:38px;border-radius:10px;flex:none;
+    background:linear-gradient(145deg,#243247,#12171f);border:1px solid var(--line-hi);
+    display:grid;place-items:center;box-shadow:inset 0 1px 0 #ffffff10}
+  .mark span{font-family:var(--mono);font-weight:700;color:var(--teal);font-size:18px}
+  h1{font-size:22px;margin:0;letter-spacing:-.01em}
+  .tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:3px}
+  .head-actions{display:flex;gap:10px;align-items:center}
+  .engine-pill{font-family:var(--mono);font-size:12px;padding:7px 12px;border-radius:8px;
+    border:1px solid var(--line-hi);background:var(--panel);color:var(--muted);display:flex;align-items:center;gap:8px}
+  .btn-ghost{font-family:var(--mono);font-size:12px;padding:7px 12px;border-radius:8px;cursor:pointer;
+    border:1px solid var(--line-hi);background:var(--panel);color:var(--muted)}
+  .btn-ghost:hover{border-color:var(--teal-dim);color:var(--ink)}
+
+  .cat{margin-top:34px}
+  .cat-head{display:flex;align-items:baseline;gap:10px;margin:0 0 14px}
+  .cat-head h2{font-size:13px;font-family:var(--mono);letter-spacing:.13em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;margin:0}
+  .cat-head .count{font-family:var(--mono);font-size:12px;color:var(--dim)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;
+    display:flex;flex-direction:column;gap:11px;transition:border-color .15s,transform .15s}
+  .card:hover{border-color:var(--line-hi);transform:translateY(-1px)}
+  .card.running{border-color:var(--run-line)}
+  .c-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+  .c-name{font-weight:650;font-size:16px;letter-spacing:-.01em}
+  .status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;
+    font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:20px;white-space:nowrap}
+  .status.up{background:var(--run-bg);color:var(--run);border:1px solid var(--run-line)}
+  .status.down{background:var(--idle-bg);color:var(--idle);border:1px solid var(--line)}
+  .status.unknown{background:var(--idle-bg);color:var(--dim);border:1px solid var(--line)}
+  .dotpulse{width:7px;height:7px;border-radius:50%;background:currentColor}
+  .status.up .dotpulse{box-shadow:0 0 0 0 #4ade8080;animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 #4ade8060}70%{box-shadow:0 0 0 6px #4ade8000}100%{box-shadow:0 0 0 0 #4ade8000}}
+  @media (prefers-reduced-motion:reduce){.status.up .dotpulse{animation:none}}
+  .c-desc{color:var(--muted);font-size:13.5px;margin:0;flex:1}
+  .c-meta{display:flex;gap:14px;font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+  .c-cmd{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--bg2);
+    border:1px solid var(--line);border-radius:7px;padding:7px 9px;overflow-x:auto;white-space:nowrap}
+  .c-cmd .k{color:var(--dim)}
+  .c-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:1px}
+  .btn{font-family:var(--sans);font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer;
+    border:1px solid transparent;display:inline-flex;align-items:center;gap:6px;transition:filter .12s,background .12s}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .btn.open{background:var(--teal);color:#06201d}
+  .btn.open:hover{filter:brightness(1.08)}
+  .btn.open[aria-disabled="true"]{background:var(--idle-bg);color:var(--idle);border-color:var(--line);cursor:not-allowed}
+  .btn.launch{background:var(--panel-hi);color:var(--ink);border-color:var(--line-hi)}
+  .btn.launch:hover{border-color:var(--teal-dim)}
+  .btn.mini{background:transparent;color:var(--dim);border-color:var(--line);font-weight:500;padding:7px 10px}
+  .btn.mini:hover{color:var(--ink);border-color:var(--line-hi)}
+
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--panel-hi);border:1px solid var(--line-hi);color:var(--ink);font-size:13.5px;
+    padding:10px 16px;border-radius:10px;opacity:0;transition:.22s;pointer-events:none;box-shadow:0 8px 30px #0008;font-family:var(--mono)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:var(--dim);font-size:12px;font-family:var(--mono)}
+  .no-backend{background:#241a10;border:1px solid #5a3f12;color:#e7c48a;font-size:13px;
+    border-radius:10px;padding:11px 15px;margin-top:16px;display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="mark"><span>S</span></div>
+      <div>
+        <h1>Sanctum Hub</h1>
+        <div class="tag">Local AI tools · one front door</div>
+      </div>
+    </div>
+    <div class="head-actions">
+      <div class="engine-pill" id="engine-pill"><span class="dotpulse" style="color:var(--dim)"></span> engine: checking…</div>
+      <button class="btn-ghost" id="refresh">↻ refresh</button>
+    </div>
+  </header>
+
+  <div class="no-backend" id="no-backend">
+    Running as a static file — status and one-click launch need the backend. Start it with
+    <b style="font-family:var(--mono)">python3 server.py</b> and open <b style="font-family:var(--mono)">http://127.0.0.1:7080</b>.
+  </div>
+
+  <main id="cats"></main>
+
+  <footer id="foot">Sanctum Hub · loading registry…</footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const HAS_BACKEND = location.protocol.startsWith("http");
+const CAT_ORDER = ["Core","Sanctum Suite","Educator Tools"];
+let REG = null;
+
+const el = (t,c,txt)=>{const e=document.createElement(t); if(c)e.className=c; if(txt!=null)e.textContent=txt; return e;};
+function toast(msg){const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2200);}
+
+async function load(){
+  REG = await (await fetch("apps.json?"+Date.now())).json();
+  const status = HAS_BACKEND ? await fetch("api/status").then(r=>r.json()).catch(()=>({})) : {};
+  render(status);
+  if(!HAS_BACKEND) document.getElementById("no-backend").style.display="block";
+  // engine pill
+  const eng = REG.apps.find(a=>a.id==="sanctum-engine");
+  const es = status[eng?.id];
+  const pill = document.getElementById("engine-pill");
+  if(!HAS_BACKEND){ pill.innerHTML='<span class="dotpulse" style="color:var(--dim)"></span> engine: unknown'; }
+  else if(es?.up){ pill.innerHTML='<span class="dotpulse" style="color:var(--run)"></span> engine: online :'+eng.port; pill.style.color="var(--run)"; }
+  else { pill.innerHTML='<span class="dotpulse" style="color:var(--idle)"></span> engine: offline'; }
+  document.getElementById("foot").textContent =
+    `Sanctum Hub · ${REG.apps.length} apps · registry: apps.json` + (HAS_BACKEND?" · backend live":" · static mode");
+}
+
+function render(status){
+  const root = document.getElementById("cats"); root.innerHTML="";
+  const cats = {};
+  REG.apps.forEach(a=>{ (cats[a.category] ??= []).push(a); });
+  const order = [...CAT_ORDER, ...Object.keys(cats).filter(c=>!CAT_ORDER.includes(c))];
+  order.filter(c=>cats[c]).forEach(cat=>{
+    const sec = el("section","cat");
+    const h = el("div","cat-head");
+    h.append(el("h2",null,cat), el("span","count",`${cats[cat].length}`));
+    sec.append(h);
+    const grid = el("div","grid");
+    cats[cat].forEach(a=> grid.append(card(a, status[a.id])));
+    sec.append(grid); root.append(sec);
+  });
+}
+
+function card(a, st){
+  const up = st?.up === true;
+  const known = st !== undefined;
+  const c = el("div","card"+(up?" running":""));
+  const top = el("div","c-top");
+  top.append(el("div","c-name",a.name));
+  const s = el("span","status "+(up?"up":known?"down":"unknown"));
+  s.append(el("span","dotpulse"), document.createTextNode(up?"running":known?"stopped":"unknown"));
+  top.append(s); c.append(top);
+  c.append(el("p","c-desc",a.description));
+  const meta = el("div","c-meta");
+  meta.append(el("span",null,":"+a.port));
+  const rl = el("a",null,"repo ↗"); rl.href=a.repo; rl.target="_blank"; rl.rel="noopener";
+  meta.append(rl);
+  c.append(meta);
+  const cmd = el("div","c-cmd");
+  cmd.innerHTML = `<span class="k">$</span> cd ${a.dir} &amp;&amp; ${a.start}`;
+  c.append(cmd);
+  const acts = el("div","c-actions");
+  const open = el("a","btn open","Open");
+  open.href=a.url; open.target="_blank"; open.rel="noopener";
+  if(!up){ open.setAttribute("aria-disabled","true"); open.addEventListener("click",e=>{e.preventDefault(); toast(a.name+" isn't running — launch it first");}); }
+  acts.append(open);
+  if(HAS_BACKEND){
+    const launch = el("button","btn launch", up?"Restart":"Launch");
+    launch.addEventListener("click",()=>doLaunch(a));
+    acts.append(launch);
+  }
+  const copy = el("button","btn mini","Copy cmd");
+  copy.addEventListener("click",()=>{navigator.clipboard.writeText(`cd ${a.dir} && ${a.start}`); toast("Command copied");});
+  acts.append(copy);
+  c.append(acts);
+  return c;
+}
+
+async function doLaunch(a){
+  toast("Launching "+a.name+"…");
+  try{
+    const r = await fetch("api/launch",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:a.id})});
+    const j = await r.json();
+    toast(j.ok ? (a.name+" starting — status updates shortly") : ("Launch failed: "+(j.error||"unknown")));
+    setTimeout(load, 2500);
+  }catch(e){ toast("Launch failed: backend unreachable"); }
+}
+
+document.getElementById("refresh").addEventListener("click",load);
+load();
+if(HAS_BACKEND) setInterval(load, 15000);
+</script>
+</body>
+</html>

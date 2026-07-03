@@ -1,0 +1,139 @@
+{
+  "_comment": "Sanctum Hub app registry. Edit `dir` to point at where each repo is cloned on this machine. `port`/`start` are best-effort defaults — confirm against each app's README. The hub reads this file live; no rebuild needed.",
+  "base_dir": "~/sanctum",
+  "apps": [
+    {
+      "id": "sanctum-engine",
+      "name": "Sanctum Engine",
+      "category": "Core",
+      "description": "Shared local-inference engine. Hardware-aware model routing and lifecycle. Every app talks to this.",
+      "repo": "https://github.com/TheAIHorizon/sanctum-engine",
+      "dir": "~/projects/sanctum-engine",
+      "port": 8765,
+      "url": "http://127.0.0.1:8765/engine/health",
+      "start": "bash scripts/install-launchd.sh",
+      "healthPath": "/engine/health"
+    },
+    {
+      "id": "consilium",
+      "name": "Consilium",
+      "category": "Sanctum Suite",
+      "description": "Multi-model AI council — compare, debate, and verify LLM responses. Runs councils locally with no key.",
+      "repo": "https://github.com/TheAIHorizon/Consilium",
+      "dir": "~/sanctum/Consilium",
+      "port": 5173,
+      "url": "http://127.0.0.1:5173",
+      "start": "npm run dev"
+    },
+    {
+      "id": "galatea",
+      "name": "Galatea",
+      "category": "Sanctum Suite",
+      "description": "Local voice AI companion with vision. Python backend + web frontend, loopback-bound.",
+      "repo": "https://github.com/TheAIHorizon/Galatea",
+      "dir": "~/sanctum/Galatea",
+      "port": 8000,
+      "url": "http://127.0.0.1:8000",
+      "start": "python -m galatea.server"
+    },
+    {
+      "id": "sanctum-writer",
+      "name": "Sanctum Writer",
+      "category": "Sanctum Suite",
+      "description": "AI-assisted markdown editor for writers. Local-first; reads models from the engine.",
+      "repo": "https://github.com/TheAIHorizon/SanctumWriter",
+      "dir": "~/sanctum/SanctumWriter",
+      "port": 3000,
+      "url": "http://127.0.0.1:3000",
+      "start": "npm run dev"
+    },
+    {
+      "id": "sanctum-writer-pro",
+      "name": "Sanctum Writer Pro",
+      "category": "Sanctum Suite",
+      "description": "Writer with optional commercial cloud providers (BYOK). The privacy boundary is structural — cloud module only in Pro.",
+      "repo": "https://github.com/TheAIHorizon/SanctumWriterPro",
+      "dir": "~/sanctum/SanctumWriterPro",
+      "port": 3010,
+      "url": "http://127.0.0.1:3010",
+      "start": "npm run dev"
+    },
+    {
+      "id": "sanctum-kanban",
+      "name": "Sanctum Kanban",
+      "category": "Sanctum Suite",
+      "description": "Multi-team kanban with reflection/retro boards and announcements. Next.js + Postgres.",
+      "repo": "https://github.com/TheAIHorizon/SanctumKanban",
+      "dir": "~/sanctum/SanctumKanban",
+      "port": 3456,
+      "url": "http://127.0.0.1:3456",
+      "start": "docker compose up -d"
+    },
+    {
+      "id": "processpulse",
+      "name": "ProcessPulse",
+      "category": "Sanctum Suite",
+      "description": "Educator writing-assessment tool. Grades against rubric criteria with a local model.",
+      "repo": "https://github.com/TheAIHorizon/ProcessPulse",
+      "dir": "~/sanctum/ProcessPulse",
+      "port": 8501,
+      "url": "http://127.0.0.1:8501",
+      "start": "python -m processpulse"
+    },
+    {
+      "id": "ach",
+      "name": "Sanctum Analyst (ACH)",
+      "category": "Sanctum Suite",
+      "description": "Local-first Analysis of Competing Hypotheses. Structured intelligence analysis powered by local models.",
+      "repo": "https://github.com/TheAIHorizon/ACH",
+      "dir": "~/sanctum/ACH",
+      "port": 5055,
+      "url": "http://127.0.0.1:5055",
+      "start": "npm run dev"
+    },
+    {
+      "id": "translachat",
+      "name": "TranslaChat",
+      "category": "Sanctum Suite",
+      "description": "Translated chat + collaborative bilingual document workspace.",
+      "repo": "https://github.com/TheAIHorizon/translachat",
+      "dir": "~/sanctum/translachat",
+      "port": 3020,
+      "url": "http://127.0.0.1:3020",
+      "start": "npm run dev"
+    },
+    {
+      "id": "ardn",
+      "name": "ARDN Global Threat",
+      "category": "Educator Tools",
+      "description": "Global threat awareness and analysis environment.",
+      "repo": "https://github.com/TheAIHorizon/ARDN-GlobalThreat",
+      "dir": "~/sanctum/ARDN-GlobalThreat",
+      "port": 8090,
+      "url": "http://127.0.0.1:8090",
+      "start": "npm run dev"
+    },
+    {
+      "id": "emcomm",
+      "name": "EmComm",
+      "category": "Educator Tools",
+      "description": "Emergency-communications game: learn to operate radios during grid-down scenarios.",
+      "repo": "https://github.com/TheAIHorizon/EmComm",
+      "dir": "~/sanctum/EmComm",
+      "port": 8091,
+      "url": "http://127.0.0.1:8091",
+      "start": "npm run dev"
+    },
+    {
+      "id": "ocrt",
+      "name": "OCRT",
+      "category": "Educator Tools",
+      "description": "Hands-on cyber/operational readiness training.",
+      "repo": "https://github.com/TheAIHorizon/OCRT",
+      "dir": "~/sanctum/OCRT",
+      "port": 8092,
+      "url": "http://127.0.0.1:8092",
+      "start": "npm run dev"
+    }
+  ]
+}
